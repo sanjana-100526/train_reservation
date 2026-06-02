@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Train Booking</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<script>
+
+function selectSeat(seat, element){
+
+    let allSeats = document.querySelectorAll(".available");
+
+    allSeats.forEach(s => {
+        s.classList.remove("selected");
+    });
+
+    element.classList.add("selected");
+
+    document.getElementById("selectedSeat").value = seat;
+
+    document.getElementById("seatText").innerText =
+        "Selected Seat: " + seat;
+}
+
+</script>
+<body>
+
+<h1>{{ train_name }}</h1>
+
+<h2>Book Seat</h2>
+
+<form action="/book/{{ train_name }}" method="POST">
+
+    <input type="text" name="name" placeholder="Passenger Name" required>
+
+    <!-- ✅ ADD THIS -->
+    <input type="text" name="from" placeholder="From Station" required>
+
+    <!-- ✅ ADD THIS -->
+    <input type="text" name="to" placeholder="To Station" required>
+
+    <div class="coach">
+
+    {% for seat in seats %}
+
+        {% if seat in booked %}
+
+            <div class="seat booked">
+                {{ seat }}
+            </div>
+
+        {% else %}
+
+            <div class="seat available"
+                 onclick="selectSeat('{{ seat }}', this)">
+                {{ seat }}
+            </div>
+
+        {% endif %}
+
+    {% endfor %}
+
+</div>
+
+<input type="hidden" name="seat" id="selectedSeat">
+
+<h3 id="seatText">
+    No seat selected
+</h3>
+
+    <button type="submit">Book</button>
+
+</form>
+
+<hr>
+
+<h2>Booked Seats</h2>
+
+{% for seat in seats %}
+    {% if seat in booked %}
+
+        <p>
+            {{ seat }} - Booked by {{ booked[seat] }}
+
+            <a href="{{ url_for('ticket', train_name=train_name.replace(' ', '-'), seat=seat) }}">
+    <button>Print Ticket</button>
+</a>
+        </p>
+
+    {% endif %}
+{% endfor %}
+
+<br><br>
+
+<a href="/view/{{ train_name }}">
+    <button>View All Customers</button>
+</a>
+
+<audio id="clickSound">
+    <source src="{{ url_for('static', filename='click.mp3') }}"
+            type="audio/mpeg">
+</audio>
+
+<script>
+
+function selectSeat(seat, element){
+
+    // play sound
+    document.getElementById("clickSound").play();
+
+    let allSeats = document.querySelectorAll(".available");
+
+    allSeats.forEach(s => {
+        s.classList.remove("selected");
+    });
+
+    element.classList.add("selected");
+
+    document.getElementById("selectedSeat").value = seat;
+
+    document.getElementById("seatText").innerText =
+        "Selected Seat: " + seat;
+}
+
+</script>
+
+</body>
+
+<!-- <a href="/ticket/{{ train_name | replace(' ', '-') }}/{{ seat }}">
+    <button>Print Ticket</button>
+</a> -->
+
+
+<br>
+
+<a href="/">Back</a>
+
+</body>
+
+</html>

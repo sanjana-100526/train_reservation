@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>View Bookings</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: linear-gradient(135deg, #0f0f1a, #1c1c3a);
+            color: white;
+            text-align: center;
+        }
+
+        h1 {
+            color: #00ffe5;
+            font-weight: bold;
+        }
+
+        .card {
+            background: #1e1e2f;
+            margin: 10px auto;
+            padding: 15px;
+            width: 60%;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #00ffe5;
+            font-weight: bold;
+        }
+
+        button {
+            background: #00ffe5;
+            border: none;
+            padding: 8px 15px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+
+        button:hover {
+            background: #00c2aa;
+        }
+
+        a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<h1>🚆 Bookings for {{ train_name }}</h1>
+
+{% if bookings %}
+
+    {% for seat, name in bookings %}
+
+        <div class="card">
+            🪑 Seat: {{ seat }}  
+            <br>
+            👤 Name: {{ name }}
+
+            <br><br>
+
+            <a href="{{ url_for('ticket', train_name=train_name.replace(' ', '-'), seat=seat) }}">
+    <button>Print Ticket</button>
+</a>
+        </div>
+
+    {% endfor %}
+
+{% else %}
+
+    <p>No bookings yet</p>
+
+{% endif %}
+
+<br>
+
+<a href="/train/{{ train_name }}">
+    🔙 Back
+</a>
+
+</body>
+
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Available Trains</title>
+</head>
+
+<body>
+
+<h2>Trains from {{ from_station }} → {{ to_station }}</h2>
+<p>Date: {{ date }}</p>
+
+<hr>
+
+{% for train in trains %}
+
+<div style="border:1px solid black; padding:10px; margin:10px;">
+
+    <h3>{{ train }}</h3>
+    <p>Available seats: A1, A2, A3, B1, B2</p>
+
+    <a href="/train/{{ train }}">
+        <button>Book Now</button>
+    </a>
+
+</div>
+
+{% endfor %}
+
+<br>
+
+<a href="/">Back</a>
+
+</body>
+</html>

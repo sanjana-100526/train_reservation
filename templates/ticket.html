@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Train Ticket</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: linear-gradient(135deg, #0f0f1a, #1c1c3a);
+            text-align: center;
+            color: white;
+        }
+
+        .ticket {
+            width: 380px;
+            margin: 60px auto;
+            padding: 20px;
+            border-radius: 15px;
+
+            background: linear-gradient(135deg, #00ffe5, #0066ff);
+            color: black;
+
+            box-shadow: 0 0 20px #00ffe5;
+            font-weight: bold;
+        }
+
+        .title {
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+
+        .box {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 10px;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px;
+            border: none;
+            background: black;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+        button:hover {
+            background: #333;
+        }
+
+        @media print {
+            button {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="ticket">
+
+    <div class="title">🚆 TRAIN TICKET</div>
+
+    <div>🎫 PNR : {{ booking_id }}</div>
+    <div>👤 Name: {{ name }}</div>
+    <div>🚆 Train: {{ train }}</div>
+    <div>🪑 Seat: {{ seat }}</div>
+
+    <div>📍 From: {{ from_station }}</div>
+    <div>📍 To: {{ to_station }}</div>
+
+    <button onclick="window.print()">🖨️ Print Ticket</button>
+
+    <!-- ✅ ADD THIS -->
+    <button onclick="window.location.href='/cancel/{{ booking_id }}'">
+        ❌ Cancel Ticket
+    </button>
+
+</div>
+
+</body>
+
+</html>
